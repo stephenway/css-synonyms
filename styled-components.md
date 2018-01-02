@@ -1,6 +1,16 @@
 # styled-components
 
+## Prerequisites
+
+Before reading this document, you are going to want to understand some basics around JS and styled-components. Check out the docs as follows:
+
+* [Javascript Constant](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const)
+* [Javascript Function Declaration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)
+* [styled-components Basics](https://www.styled-components.com/docs/basics#getting-started)
+
 ### Variables
+
+In Javascript, you can use a few patterns for variables like the dollar (`$`) sign in Sass using primarily `const` for values that will never change, and `let` for ones that will change. For the purpose of demonstrating a simple variable in JS we will just use `const` here.
 
 Sass
 ```sass
@@ -29,9 +39,12 @@ const Foo = styled.div`
 ```
 
 ### Nesting
+This one isn't really any different, but you also have the power to reference other components by declaring the component name for the selector.
 
 Sass
 ```sass
+.container { width 100% }
+
 nav {
   ul {
     margin: 0;
@@ -46,11 +59,19 @@ nav {
     padding: 6px 12px;
     text-decoration: none;
   }
+  
+  .container {
+    min-height: 250px;
+  }
 }
 ```
 
 Javascript
 ```js
+const Container = styled.div`
+  width: 100%;
+`;
+
 const Nav = styled.nav`
   ul {
     margin: 0;
@@ -65,6 +86,10 @@ const Nav = styled.nav`
     padding: 6px 12px;
     text-decoration: none;
   }
+  
+  ${Container} {
+    min-height: 250px;
+  }
 `;
 ```
 
@@ -78,12 +103,14 @@ Sass
 
 Javascript
 ```js
-// Import reset.js file
+// Import the reset object from the reset.js file
 import { reset } from './reset';
 ```
 *MDN Reference: [import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)*
 
 ### Mixins
+
+Making mixins in Javacript is a very straightforward process. We can write a function with a key/value object that styled-components can parse into your components.
 
 Sass
 ```sass
@@ -119,6 +146,8 @@ const Box = styled.div`
 
 ### Operators
 
+This is where the power of Javascript comes out to your advantage, because you can use it's large collection of arithmetic operators.
+
 Sass
 ```sass
 .container { width: 100%; }
@@ -135,6 +164,9 @@ aside[role="complementary"] {
 ```
 
 Javascript
+
+[MDC Arithmetic Operators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Arithmetic_Operators)
+
 ```js
 const Container = styled.div`
   width: 100%;
