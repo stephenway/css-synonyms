@@ -14,8 +14,12 @@ $primary-color: #333;
 ```
 
 Javascript
+
+1. If you want to make a constant/variable made available to other files outside the current one, you need to prepend it with `export`.
+2. When using 
+
 ```js
-const fontStack = 'Helvetica, sans-serif';
+export const fontStack = 'Helvetica, sans-serif'; // 1
 const primaryColor = '#333';
 
 const Foo = styled.div`
@@ -95,15 +99,60 @@ Sass
 
 Javascript
 
-* We are exporting this function because a Sass mixin is already accessible from outside the file it's in.
-* Basic CSS rules like `border-radius` are written in cammel case (`borderRadius`) in Javascript objects.
+1. We are exporting this function because a Sass mixin is already accessible from outside the file it's in.
+2. Basic CSS rules like `border-radius` are written in cammel case (`borderRadius`) in Javascript objects.
+3. When passing values to method arguments, we give it a string when providing the unit (px, em, etc.)
+4. Extend isn't a pattern that has been defined, not sure if it needs to be as that technique has been [proven not to be a best practice](https://www.sitepoint.com/avoid-sass-extend/).
+
 ```js
-export function borderRadius(radius) {
+export function borderRadius(radius) { // 1
   '-webkit-border-radius': radius,
      '-moz-border-radius': radius,
       '-ms-border-radius': radius,
-             borderRadius: radius,
+             borderRadius: radius, // 2
 }
+
+const Box = styled.div`
+  ${borderRadius('10px')} // 3
+`;
+```
+
+### Operators
+
+Sass
+```sass
+.container { width: 100%; }
+
+article[role="main"] {
+  float: left;
+  width: 600px / 960px * 100%;
+}
+
+aside[role="complementary"] {
+  float: right;
+  width: 300px / 960px * 100%;
+}
+```
+
+Javascript
+```js
+const Container = styled.div`
+  width: 100%;
+`;
+
+const Article = styled.article.attrs({
+  role: 'main',
+})`
+  float: left;
+  width: ${600 / 960 * 100}%;
+`;
+
+const Aside = styled.aside.attrs({
+  role: 'complementary',
+})`
+  float: right;
+  width: ${300 / 960 * 100}%;
+`;
 ```
 
 ### Printing an error
